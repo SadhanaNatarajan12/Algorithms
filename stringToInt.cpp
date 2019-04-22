@@ -46,6 +46,10 @@ int main(int argc, const char * argv[])
     std::string s2 ="100";
     std::cout<<stringToInt(s2)<<std::endl;
 
+    std::string s3 = "01010101";
+    std::cout<<stringToInt(s3)<<std::endl;
+
     std::cout<<"stringToIntUsingStringStream : "<<stringToIntUsingStringStream(s1)<<std::endl;
     std::cout<<"stringToIntUsingStringStream : "<<stringToIntUsingStringStream(s2)<<std::endl;
+    std::cout<<"stringToIntUsingStringStream : "<<stringToIntUsingStringStream(s3)<<std::endl;
 }

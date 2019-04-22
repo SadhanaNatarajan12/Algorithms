@@ -46,7 +46,7 @@ void generate_powerset(std::vector<int> &vec)
     std::vector<int> chosen;
     generate_powersetUtil(vec, chosen);
 }
-    
+
 int main()
 {
     std::vector<int> vec;
