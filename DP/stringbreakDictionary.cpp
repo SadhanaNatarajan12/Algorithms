@@ -36,6 +36,9 @@ bool stringbreakWithMemoHelper(std::string s, std::unordered_set<std::string> &d
 	return true;
     }
 
+    if (s.empty())
+	return true;
+
     for (int pos = 1; pos <= s.size() - 1; pos++) {
 	if (dictionary.find(s.substr(0, pos)) == dictionary.end()) {
 	    continue;
@@ -72,4 +75,6 @@ int main()
 
     std::cout<<stringbreakWithMemo(s, dictionary)<<std::endl;
     std::cout<<stringbreakWithMemo(s1, dictionary)<<std::endl;
+
+    std::cout<<stringbreakWithMemo("", dictionary)<<std::endl;
 }
