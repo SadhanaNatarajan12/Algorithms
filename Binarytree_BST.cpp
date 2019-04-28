@@ -11,6 +11,11 @@ struct Node {
 	left = NULL;
 	right = NULL;
     }
+
+    ~Node() {
+	delete left;
+	delete right;
+    }
 };
 
 void preorder(struct Node* root)
@@ -121,6 +126,52 @@ Node* lca_bst(struct Node* root, int n1, int n2)
     return root;
 }
 
+void klargest_elements_BSTHelper(struct Node* root, int k, int &counter, std::vector<int> &vec)
+{
+    //Reverse inorder traversal
+    if (root == NULL)
+	return;
+
+    klargest_elements_BSTHelper(root->right, k, counter, vec);
+
+    if (counter < k) {
+	counter++;
+	vec.push_back(root->data);
+    }
+
+    klargest_elements_BSTHelper(root->left, k, counter, vec);
+}
+
+void klargest_elements_BST(struct Node* root, int k)
+{
+    std::vector<int> vec;
+    int counter = 0;
+    klargest_elements_BSTHelper(root, k, counter, vec);
+    std::cout<<"Printing the largest "<<k<<" elements"<<std::endl;
+    for (int i = 0; i <= vec.size() - 1; i++) {
+	std::cout<<vec[i]<<" ";
+    }
+	std::cout<<std::endl;
+}
+
+void TEST_driver_klargest_elements_BST()
+{
+    Node *root = new Node(10);
+    root->left = new Node(-10);
+    root->right = new Node(30);
+    root->left->right = new Node(8);
+    root->left->right->left = new Node(6);
+    root->left->right->right = new Node(9);
+    root->right->left = new Node(25);
+    root->right->right = new Node(60);
+    root->right->left->left = new Node(28);
+    root->right->right->right = new Node(78);
+
+    klargest_elements_BST(root, 3);
+
+    delete root;
+}
+
 void TEST_driver_lowest_common_ancestor_BST()
 {
     Node *root = new Node(10);
@@ -141,6 +192,8 @@ void TEST_driver_lowest_common_ancestor_BST()
     assert(resultNode->data == 8);
     resultNode = lca_bst(root, 30, 78);
     assert(resultNode->data == 30);
+
+    delete root;
 }
 
 void TEST_driver_lowest_common_ancestor_binary_tree()
@@ -162,6 +215,8 @@ void TEST_driver_lowest_common_ancestor_binary_tree()
     assert(resultNode->data == 3);
     resultNode = lca_binary_tree(root, 8, 7);
     assert(resultNode->data == 8);
+
+    delete root;
 }
 
 void TEST_driver_search_BST()
@@ -179,6 +234,8 @@ void TEST_driver_search_BST()
     assert(recursiveSearchBST(root, 36) == iterativeSearchBST(root, 36));
     assert(recursiveSearchBST(root, 3) == iterativeSearchBST(root, 3));
 
+    delete root;
+
     Node* root1 = new Node(10);
     root1->right = new Node(15);
     root1->right->right = new Node(16);
@@ -188,9 +245,11 @@ void TEST_driver_search_BST()
     assert(recursiveSearchBST(root1, 18) == iterativeSearchBST(root1, 18));
     assert(recursiveSearchBST(root1, 36) == iterativeSearchBST(root1, 36));
     assert(recursiveSearchBST(root1, 15) == iterativeSearchBST(root1, 15));
+
+    delete root1;
 }
 
-void Test_driver_traversals()
+void TEST_driver_traversals()
 {
     Node* root = new Node(10);
     root->left = new Node(15);
@@ -212,6 +271,8 @@ void Test_driver_traversals()
     postorder(root);
     std::cout<<std::endl;
 
+    delete root;
+
     Node* root1 = new Node(1);
     root1->left = new Node(2);
     root1->right = new Node(3);
@@ -223,12 +284,16 @@ void Test_driver_traversals()
     std::cout<<"Level Order Traversal: "<<std::endl;
     levelorder(root1);
     std::cout<<std::endl;
+
+    delete root1;
 }
 
 int main()
 {
-    Test_driver_traversals();
+    TEST_driver_traversals();
     TEST_driver_search_BST();
     TEST_driver_lowest_common_ancestor_binary_tree();
     TEST_driver_lowest_common_ancestor_BST();
+
+    TEST_driver_klargest_elements_BST();
 }
